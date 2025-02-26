@@ -28,7 +28,7 @@
 
         foreach ($datauser as $key => $value) {
             if (!empty($value)){
-                echo '<li class="list-group-item"><strong>'.ucfirst($key) .'</strong>' .htmlspecialchars($value) .'</li>';
+                echo '<li class="list-group-item"><strong>'.ucfirst($key) .'</strong> : ' .htmlspecialchars($value) .'</li>';
             }
             else{
                 echo '<li class="list-group-item"><strong>'.ucfirst($key) .'</strong> Data Kosong</li>';
