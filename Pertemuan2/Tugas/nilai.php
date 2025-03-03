@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Form Nilai Mahasiswa</h2>
-        <form method="GET" action="output_nilai.php" class="p-4 border rounded bg-light">
+        <form method="POST" action="nilai_siswa.php" class="form-horizontal p-4 border rounded">
             <div class="mb-3">
                 <label class="form-label">Nama:</label>
                 <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama">
@@ -36,7 +36,7 @@
                 <label class="form-label">Nilai Tugas/Praktikum:</label>
                 <input type="text" name="nilai_tugas" class="form-control" placeholder="Masukkan Nilai Tugas">
             </div>
-            <div class="text-center">
+            <div class="text-left">
                 <input type="submit" name="proses" value="Simpan" class="btn btn-primary">
             </div>
         </form>

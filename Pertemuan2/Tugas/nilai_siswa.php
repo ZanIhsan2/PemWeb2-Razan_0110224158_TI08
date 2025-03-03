@@ -8,12 +8,12 @@
 </head>
 <body>
 <?php
-if (isset($_GET['proses'])) {
-    $nama = $_GET['nama'] ?? '';
-    $matkul = $_GET['matkul'] ?? '';
-    $nilai_uts = $_GET['nilai_uts'] ?? 0;
-    $nilai_uas = $_GET['nilai_uas'] ?? 0;
-    $nilai_tugas = $_GET['nilai_tugas'] ?? 0;
+if (isset($_POST['proses'])) {
+    $nama = $_POST['nama'] ?? '';
+    $matkul = $_POST['matkul'] ?? '';
+    $nilai_uts = $_POST['nilai_uts'] ?? 0;
+    $nilai_uas = $_POST['nilai_uas'] ?? 0;
+    $nilai_tugas = $_POST['nilai_tugas'] ?? 0;
 
     // Konversi ke angka
     $nilai_uts = (int) $nilai_uts;
@@ -35,10 +35,13 @@ if (isset($_GET['proses'])) {
     } else {
         $predikat = "E (Tidak Memadai)";
     }
+
+// Menentukan Lulus atau Tidak
+$status = ($nilai_akhir > 55) ? "<span class='text-success fw-bold'>LULUS</span>" : "<span class='text-danger fw-bold'>TIDAK LULUS</span>";
 }
 ?>
     <div class="container mt-5">
-        <h2 class="text-center">Hasil Nilai</h2>
+        <h2 class="text-center">Hasil Nilai Mahasiswa</h2>
         <div class="card p-4">
             <p><strong>Nama:</strong> <?= htmlspecialchars($nama) ?></p>
             <p><strong>Mata Kuliah:</strong> <?= htmlspecialchars($matkul) ?></p>
@@ -47,6 +50,7 @@ if (isset($_GET['proses'])) {
             <p><strong>Nilai Tugas:</strong> <?= $nilai_tugas ?></p>
             <p><strong>Nilai Akhir:</strong> <?= $nilai_akhir ?></p>
             <p><strong>Predikat:</strong> <?= $predikat ?></p>
+            <p><strong>Status:</strong> <?= $status ?></p>
         </div>
         <a href="nilai.php" class="btn btn-primary mt-3">Kembali</a>
     </div>
