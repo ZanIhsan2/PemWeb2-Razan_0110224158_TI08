@@ -8,7 +8,7 @@ $data_mhs[] = new NilaiMahasiswa("Razan Muhammad Ihsan Rismawandi", "Pemrograman
 $data_mhs[] = new NilaiMahasiswa("Muhammad Pramagusti", "Pemrograman Web", 47, 68, 85);
 $data_mhs[] = new NilaiMahasiswa("Fajar Adityo Kunjtoro", "Pemrograman Web", 57, 78, 75);
 
-// Proses data jika form disubmit
+// Proses data jika disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $nama = $_POST["nama"];
     $matakuliah = $_POST["matkul"];
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $nilai_uas = $_POST["uas"];
     $nilai_tugas = $_POST["tugas"];
 
-    // Buat objek NilaiMahasiswa dan tambahkan ke dalam array
+    // Bikin objek NilaiMahasiswa dan masukan ke dalam array  
     $data_mhs[] = new NilaiMahasiswa($nama, $matakuliah, $nilai_uts, $nilai_uas, $nilai_tugas);
 }
 ?>
@@ -30,11 +30,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        h2 {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        h2, h3 {
             text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background: green;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        input[type="submit"]:hover {
+            background: darkgreen;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
         }
         th {
             background: green;
+            color: white;
+        }
+        td {
+            background: skyblue;
         }
     </style>
 </head>
