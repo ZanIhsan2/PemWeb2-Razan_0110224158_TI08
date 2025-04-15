@@ -54,7 +54,7 @@ $rs = $dbh->query($sql);
         </table>
 
         <div class="mt-6">
-            <a href="../index.php" class="text-blue-500 hover:underline text-sm">← Kembali ke Beranda</a>
+            <a href="../Dashboard/admin.php" class="text-blue-500 hover:underline text-sm">← Kembali ke Beranda</a>
         </div>
     </div>
 </body>

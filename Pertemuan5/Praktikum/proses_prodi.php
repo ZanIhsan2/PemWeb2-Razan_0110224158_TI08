@@ -16,10 +16,12 @@ if($_proses == "Simpan"){
     $ar_data = [$_kode, $_nama, $kaprodi, $id_edit];
     $sql = "UPDATE prodi SET kode = ?, nama = ?, kaprodi = ? WHERE id = ?";
 
-}elseif($_proses == "Hapus"){
-    $id_hapus = $_POST['id_hapus'] ?? NULL;
-    $ar_data = [$id_hapus];
+}elseif(isset($_GET['hapus']) && isset($_GET['id'])) {
+    $id = $_GET['id'];
     $sql = "DELETE FROM prodi WHERE id = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute([$id]);
+    header("Location: list_prodi.php");
 
 }else{
     die("Proses tidak dikenali. Pastikan tombol yang ditekan adalah simpan, Update, atau Hapus");

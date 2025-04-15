@@ -27,8 +27,8 @@ foreach($rs as $row){
         <td><?php echo $row->nama;?></td>
         <td><?php echo $row->kaprodi;?></td>
         <td>
-           <a href="edit_prodi.php?id=<?php echo $row->id; ?>">Edit</a>
-           <a href="hapus_prodi.php?id=<?php echo $row->id; ?>">Hapus</a>
+            <a href="form_prodi.php?id=<?php echo $row->id; ?>">Edit</a> |
+            <a href="proses_prodi.php?hapus=1&id=<?php echo $row->id; ?>" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
         </td>
 
     </tr>
