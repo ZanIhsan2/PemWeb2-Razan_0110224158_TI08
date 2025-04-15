@@ -25,7 +25,7 @@ if ($_proses == "Simpan") {
     $sql = "DELETE FROM pasien WHERE id = ?";
     $stmt = $dbh->prepare($sql);
     $stmt->execute([$_GET['id']]);
-    header("Location: index_pasien.php");
+    header("Location: index.php");
     exit;
 } else {
     die("Aksi tidak dikenali");
