@@ -2,58 +2,84 @@
 // Koneksi Database
 require_once '../dbkoneksi.php';
 
-// Definisi Query
-$id = $_GET['id'] ?? null;
-$nama = $gender = $tmp_lahir = $tgl_lahir = $kategori = $telpon = $alamat = '';
-$proses = "Simpan";
-
+// Query dayta pasien jika ada ID
+$id = $_GET['id'] ?? '';
+$data = [];
 if ($id) {
     $sql = "SELECT * FROM paramedik WHERE id = ?";
     $stmt = $dbh->prepare($sql);
     $stmt->execute([$id]);
-    $row = $stmt->fetch();
-
-    if ($row) {
-        $nama = $row->nama;
-        $gender = $row->gender;
-        $tmp_lahir = $row->tmp_lahir;
-        $tgl_lahir = $row->tgl_lahir;
-        $kategori = $row->kategori;
-        $telpon = $row->telpon;
-        $alamat = $row->alamat;
-        $proses = "Update";
-    }
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 
-<form method="POST" action="paramedik_proses.php">
-    <label>Nama:</label><br>
-    <input type="text" name="nama" value="<?= $nama ?>"><br>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Paramedik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
 
-    <label>Gender:</label><br>
-    <select name="gender">
-        <option value="L" <?= ($gender == 'L') ? 'selected' : '' ?>>Laki-laki</option>
-        <option value="P" <?= ($gender == 'P') ? 'selected' : '' ?>>Perempuan</option>
-    </select><br>
+<div class="container mx-auto px-4 py-6 max-w-2x1">
+    <h2 class="text-2x1 font-bold mb-4"><?= $id ? 'Edit' : 'Tambah' ?> Data Paramedik</h2>
 
-    <label>Tempat Lahir:</label><br>
-    <input type="text" name="tmp_lahir" value="<?= $tmp_lahir ?>"><br>
+    <!-- Tombol Kembali -->
+     <a href="index.php" class="inline-block mb-4 text-blue-600 hover:underline">← Kembali ke Daftar Paramedik</a>
 
-    <label>Tanggal Lahir:</label><br>
-    <input type="date" name="tgl_lahir" value="<?= $tgl_lahir ?>"><br>
+     <!-- Formulir -->
+    <form method="POST" action="paramedik_proses.php" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <input type="hidden" name="id_edit" value="<?= $data['id'] ?? '' ?>">
 
-    <label>Kategori:</label><br>
-    <input type="text" name="kategori" value="<?= $kategori ?>"><br>
+        <div class="mb-4">
+            <label class="block text-gray-700">Nama:</label>
+            <input type="text" name="nama" value="<?= $data['nama'] ?? '' ?>" class="w-full border rounded px-3 py-2"><br>
+        </div>
 
-    <label>Telpon:</label><br>
-    <input type="text" name="telpon" value="<?= $telpon ?>"><br>
+        <div class="mb-4">
+            <label class="block text-gray-700">Tempat Lahir:</label>
+            <input type="text" name="tmp_lahir" value="<?= $data['tmp_lahir'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+        </div>
 
-    <label>Alamat:</label><br>
-    <textarea name="alamat"><?= $alamat ?></textarea><br>
+        <div class="mb-4">
+            <label class="block text-gray-700">Tanggal Lahir:</label>
+            <input type="date" name="tgl_lahir" value="<?= $data['tgl_lahir'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+        </div>
 
-    <?php if($id): ?>
-        <input type="hidden" name="id_edit" value="<?= $id ?>">
-    <?php endif; ?>
+        <div class="mb-4">
+            <label class="block text-gray-700">Gender:</label>
+            <select name="gender" class="w-full border rounded px-3 py-2">
+                <option value="">--Pilih--</option>
+                <option value="L" <?= isset($data['gender']) && $data['gender'] == 'L' ? 'selected' : '' ?>>Laki-laki</option>
+                <option value="P" <?= isset($data['gender']) && $data['gender'] == 'P' ? 'selected' : '' ?>>Perempuan</option>
+            </select>
+        </div>
 
-    <input type="submit" name="proses" value="<?= $proses ?>">
-</form>
+        <div class="mb-4">
+            <label class="block text-gray-700">Kategori:</label>
+            <input type="text" name="kategori" value="<?= $data['kategori'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700">Telpon:</label>
+            <input type="text" name="telpon" value="<?= $data['telpon'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700">Alamat:</label>
+            <textarea name="alamat" class="w-full border rounded px-3 py-2"><?= $data['alamat'] ?? '' ?></textarea>
+        </div>
+
+        <div class="flex justify-between">
+            <button type="submit" name="proses" value="<?= $id ? 'Update' : 'Simpan' ?>"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <?= $id ? 'Update' : 'Simpan' ?>
+            </button>
+            <a href="index.php" class="text-gray-600 hover:underline mt-2">Batal</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

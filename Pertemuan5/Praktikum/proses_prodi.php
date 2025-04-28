@@ -7,6 +7,7 @@ $_nama = $_POST['nama'] ?? NULL;
 $kaprodi = $_POST['kaprodi'] ?? NULL;
 $_proses = $_POST['proses'] ?? NULL;
 
+// Buat Query
 if($_proses == "Simpan"){
     $sql = "INSERT INTO prodi(kode,nama,kaprodi) VALUES (?,?,?)";
     $ar_data = [$_kode, $_nama, $kaprodi];
@@ -24,7 +25,7 @@ if($_proses == "Simpan"){
     header("Location: list_prodi.php");
 
 }else{
-    die("Proses tidak dikenali. Pastikan tombol yang ditekan adalah simpan, Update, atau Hapus");
+    die("Proses tidak diketahui. Pastikan tombol yang anda tekan adalah simpan, Update, atau Hapus");
 }
 
 // 5. Buat Statemant

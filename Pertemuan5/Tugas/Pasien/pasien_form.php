@@ -81,7 +81,7 @@ if ($id) {
                 class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 <?= $id ? 'Update' : 'Simpan' ?>
             </button>
-            <a href="pasien_index.php" class="text-gray-600 hover:underline mt-2">Batal</a>
+            <a href="index.php" class="text-gray-600 hover:underline mt-2">Batal</a>
         </div>
     </form>
 </div>

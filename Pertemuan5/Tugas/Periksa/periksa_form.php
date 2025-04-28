@@ -1,17 +1,10 @@
 <?php
+// Koneksi ke database
 require_once '../dbkoneksi.php';
 
+// Query data pasien jika ada ID
 $id = $_GET['id'] ?? '';
-$data = [
-    'tanggal' => '',
-    'berat' => '',
-    'tinggi' => '',
-    'tensi' => '',
-    'keterangan' => '',
-    'pasien_id' => '',
-    'dokter_id' => ''
-];
-
+$data = [];
 if ($id) {
     $sql = "SELECT * FROM periksa WHERE id = ?";
     $stmt = $dbh->prepare($sql);
@@ -19,88 +12,86 @@ if ($id) {
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-$pasien = $dbh->query("SELECT id, nama FROM pasien")->fetchAll(PDO::FETCH_ASSOC);
-$dokter = $dbh->query("SELECT id, nama FROM paramedik")->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Form Pemeriksaan</title>
-    <style>
-        form {
-            width: 400px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, textarea, select {
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 8px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #2c7be5;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #1a5fcc;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800">
 
-<h3 style="text-align:center;">Form Pemeriksaan</h3>
-<form method="POST" action="periksa_proses.php">
-    <input type="hidden" name="id_edit" value="<?= htmlspecialchars($id) ?>">
+<div class="container mx-auto px-4 py-6 max-w-2x1">
+    <h2 class="text-2x1 font-bold mb-4"><?= $id ? 'Edit' : 'Tambah' ?>Data Periksa</h2>
 
-    <label for="tanggal">Tanggal:</label>
-    <input type="date" name="tanggal" id="tanggal" value="<?= htmlspecialchars($data['tanggal']) ?>">
+    <!-- Tombol Kembali -->
+     <a href="index.php" class="inline-block mb-4 text-blue-600 hover:underline">← Kembali ke Daftar Pasien</a>
 
-    <label for="berat">Berat (kg):</label>
-    <input type="number" name="berat" id="berat" step="0.1" value="<?= htmlspecialchars($data['berat']) ?>">
+     <!-- Formulir -->
+    <form method="POST" action="periksa_proses.php" class="bg-white shdow-md rounded px-8 pt-6 pb-8 mb-4">
+        <input type="hidden" name="id_edit" value="<?= $data['id'] ?? '' ?>">
 
-    <label for="tinggi">Tinggi (cm):</label>
-    <input type="number" name="tinggi" id="tinggi" step="0.1" value="<?= htmlspecialchars($data['tinggi']) ?>">
+        <div class="mb-4">
+            <label class="block text-gray-700">Tanggal:</label>
+            <input type="date" name="tanggal" value="<?= $data['tanggal'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+        </div>
 
-    <label for="tensi">Tensi:</label>
-    <input type="text" name="tensi" id="tensi" value="<?= htmlspecialchars($data['tensi']) ?>">
+        <div class="mb-4">
+            <label class="block text-gray-700">Berat (kg):</label>
+            <input type="number" name="berat" step="0.1" value="<?= $data['berat'] ?? '' ?>">
+        </div>
 
-    <label for="keterangan">Keterangan:</label>
-    <textarea name="keterangan" id="keterangan"><?= htmlspecialchars($data['keterangan']) ?></textarea>
+        <div class="mb-4">
+            <label class="block text-gray-700">Tinggi (cm):</label>
+            <input type="number" name="tinggi" step="0.1" value="<?= $data['tinggi'] ?? '' ?>">
+        </div>
 
-    <label for="pasien_id">Pasien:</label>
-    <select name="pasien_id" id="pasien_id" required>
-        <option value="">-- Pilih Pasien --</option>
-        <?php foreach ($pasien as $ps): ?>
-            <option value="<?= $ps['id'] ?>" <?= ($ps['id'] == $data['pasien_id']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($ps['nama']) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+        <div class="mb-4">
+            <label class="block text-gray-700">Tensi:</label>
+            <input type="text" name="tensi" value="<?= $data['tensi'] ?? '' ?>">
+        </div>
 
-    <label for="dokter_id">Dokter:</label>
-    <select name="dokter_id" id="dokter_id" required>
-        <option value="">-- Pilih Dokter --</option>
-        <?php foreach ($dokter as $dr): ?>
-            <option value="<?= $dr['id'] ?>" <?= ($dr['id'] == $data['dokter_id']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($dr['nama']) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+        <div class="mb-4">
+            <label class="block text-gray-700">Keterangan:</label>
+            <textarea name="keterangan"><?= $data['keterangan'] ?? '' ?></textarea>
+        </div>
 
-    <button type="submit" name="proses" value="<?= $id ? 'Update' : 'Simpan' ?>">
-        <?= $id ? 'Update' : 'Simpan' ?>
-    </button>
-</form>
+        <div class="mb-4">
+            <label class="block text-gray-700" for="pasien_id">Pasien:</label>
+            <select name="pasien_id" id="pasien_id" class="w-full border rounded px-3 py-2" required>
+                <option value="">-- Pilih Pasien --</option>
+                <?php foreach ($pasien as $ps): ?>
+                    <option value="<?= $ps['id'] ?>" <?= ($ps['id'] == $data['pasien_id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($ps['nama']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700" for="dokter_id">Dokter:</label>
+            <select name="dokter_id" id="dokter_id" class="w-full border rounded px-3 py-2" required>
+                <option value="">-- Pilih Dokter --</option>
+                <?php foreach ($dokter as $dr): ?>
+                    <option value="<?= $dr['id'] ?>" <?= ($dr['id'] == $data['dokter_id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($dr['nama']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="flex justify-between">
+            <button type="submit" name="proses" value="<?= $id ? 'Update' : 'Simpan' ?>"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <?= $id ? 'Update' : 'Simpan' ?>
+            </button>
+            <a href="index.php" class="text-gray-600 hover:underline mt-2">Batal</a>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

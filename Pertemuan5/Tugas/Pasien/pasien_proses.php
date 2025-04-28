@@ -34,3 +34,4 @@ if ($_proses == "Simpan") {
 $stmt = $dbh->prepare($sql);
 $stmt->execute($ar_data);
 header("Location: index.php");
+?>

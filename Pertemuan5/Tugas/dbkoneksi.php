@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db = 'dbpuskesmas';
+$db = 'puskesmas';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
@@ -16,5 +16,5 @@ $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     ];
 
 // Buat objek koneksi PDO
-$dbh = new PDO($dsn, $user, $pass, $opt);
+$dbh = new PDO($dsn, $user, $pass, $opt);   
 ?>

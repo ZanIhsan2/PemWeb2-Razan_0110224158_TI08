@@ -3,14 +3,14 @@
 require_once '../dbkoneksi.php';
 
 // Ambil data dari FORM
-$nama = $_POST['nama'] ?? null;
-$gender = $_POST['gender'] ?? null;
-$tmp_lahir = $_POST['tmp_lahir'] ?? null;
-$tgl_lahir = $_POST['tgl_lahir'] ?? null;
-$kategori = $_POST['kategori'] ?? null;
-$telpon = $_POST['telpon'] ?? null;
-$alamat = $_POST['alamat'] ?? null;
-$proses = $_POST['proses'] ?? null;
+$nama = $_POST['nama'] ?? NULL;
+$gender = $_POST['gender'] ?? NULL;
+$tmp_lahir = $_POST['tmp_lahir'] ?? NULL;
+$tgl_lahir = $_POST['tgl_lahir'] ?? NULL;
+$kategori = $_POST['kategori'] ?? NULL;
+$telpon = $_POST['telpon'] ?? NULL;
+$alamat = $_POST['alamat'] ?? NULL;
+$proses = $_POST['proses'] ?? NULL;
 
 if ($proses == "Simpan") {
     $sql = "INSERT INTO paramedik (nama, gender, tmp_lahir, tgl_lahir, kategori, telpon, alamat) 
