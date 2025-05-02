@@ -1,6 +1,8 @@
 <?php
 // Menghubungkan ke database
 require_once '../dbkoneksi.php';
+include '../Dashboard/header.php';
+include '../Dashboard/sidebar.php';
 
 // Mengambil data dari table kelurahan
 $sql = "SELECT * FROM kelurahan";
@@ -18,9 +20,10 @@ $rs = $dbh->query($sql);
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <div class="flex justify-between items-center mb-6">
+<body class="bg-gray-100 text-gray-800 flex">
+    <div class="content-wrapper">
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 content-wrapper">
+        <div class="flex justify-between items-center mb-6 content overflow-x-auto">
             <h1 class="text-2xl font-bold text-gray-800">Daftar Kelurahan</h1>
             <a href="kelurahan_form.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
                 + Tambah Kelurahan
@@ -57,5 +60,8 @@ $rs = $dbh->query($sql);
             <a href="../Dashboard/admin.php" class="text-blue-500 hover:underline text-sm">← Kembali ke Beranda</a>
         </div>
     </div>
+    </div>
 </body>
 </html>
+
+<?php include '../Dashboard/footer.php'; ?>

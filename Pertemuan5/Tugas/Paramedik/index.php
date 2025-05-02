@@ -1,6 +1,8 @@
 <?php
 // Koneksi ke Database
 require_once '../dbkoneksi.php';
+include '../Dashboard/header.php';
+include '../Dashboard/sidebar.php';
 
 // Definisi Query
 $sql = "SELECT * FROM paramedik";
@@ -15,8 +17,9 @@ $rs = $dbh->query($sql);
     <title>Paramedik</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
-<div class="container mx-auto px-4 py-6">
+<body class="bg-gray-100 text-gray-800 flex">
+<div class="container mx-auto px-2">
+    <div class="content-wrapper">
     <h1 class="text-2x1 font-bold mb-4">Data Paramedik</h1>
 
     <!-- Tombol Navigasi -->
@@ -60,6 +63,8 @@ $rs = $dbh->query($sql);
             </tbody>
         </table>
     </div>
+    </div>
 </div>
 </body>
 </html>
+<?php include '../Dashboard/footer.php'; ?>

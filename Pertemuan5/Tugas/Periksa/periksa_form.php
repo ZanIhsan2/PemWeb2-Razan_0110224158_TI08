@@ -2,6 +2,16 @@
 // Koneksi ke database
 require_once '../dbkoneksi.php';
 
+// Ambil daftar pasien
+$sql_pasien = "SELECT id, nama FROM pasien";
+$stmt_pasien = $dbh->query($sql_pasien);
+$pasien = $stmt_pasien->fetchAll(PDO::FETCH_ASSOC);
+
+// Ambil daftar dokter (paramedik)
+$sql_dokter = "SELECT id, nama FROM paramedik";
+$stmt_dokter = $dbh->query($sql_dokter);
+$dokter = $stmt_dokter->fetchAll(PDO::FETCH_ASSOC);
+
 // Query data pasien jika ada ID
 $id = $_GET['id'] ?? '';
 $data = [];
@@ -63,10 +73,10 @@ if ($id) {
             <label class="block text-gray-700" for="pasien_id">Pasien:</label>
             <select name="pasien_id" id="pasien_id" class="w-full border rounded px-3 py-2" required>
                 <option value="">-- Pilih Pasien --</option>
-                <?php foreach ($pasien as $ps): ?>
-                    <option value="<?= $ps['id'] ?>" <?= ($ps['id'] == $data['pasien_id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($ps['nama']) ?>
-                    </option>
+                    <?php foreach ($pasien as $ps): ?>
+                <option value="<?= $ps['id'] ?>" <?= (isset($data['pasien_id']) && $ps['id'] == $data['pasien_id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($ps['nama']) ?>
+                </option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -75,10 +85,10 @@ if ($id) {
             <label class="block text-gray-700" for="dokter_id">Dokter:</label>
             <select name="dokter_id" id="dokter_id" class="w-full border rounded px-3 py-2" required>
                 <option value="">-- Pilih Dokter --</option>
-                <?php foreach ($dokter as $dr): ?>
-                    <option value="<?= $dr['id'] ?>" <?= ($dr['id'] == $data['dokter_id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($dr['nama']) ?>
-                    </option>
+                    <?php foreach ($dokter as $dr): ?>
+                <option value="<?= $dr['id'] ?>" <?= (isset($data['dokter_id']) && $dr['id'] == $data['dokter_id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($dr['nama']) ?>
+                </option>
                 <?php endforeach; ?>
             </select>
         </div>

@@ -11,6 +11,11 @@ if ($id) {
     $stmt->execute([$id]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+// Ambil data kelurahan untuk dropdown
+$sql_kel = "SELECT id, nama_kelurahan FROM kelurahan";
+$kelurahan = $dbh->query($sql_kel)->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -72,8 +77,15 @@ if ($id) {
         </div>
 
         <div class="mb-6">
-            <label class="block text-gray-700">Kelurahan ID:</label>
-            <input type="number" name="kelurahan_id" value="<?= $data['kelurahan_id'] ?? '' ?>" class="w-full border rounded px-3 py-2">
+            <label class="block text-gray-700">Kelurahan:</label>
+            <select name="kelurahan_id" class="w-full border rounded px-3 py-2">
+                <option value="">-- Pilih Kelurahan --</option>
+                    <?php foreach($kelurahan as $kel): ?>
+                <option value="<?= $kel['id'] ?>" <?= isset($data['kelurahan_id']) && $data['kelurahan_id'] == $kel['id'] ? 'selected' : '' ?>>
+                    <?= $kel['nama_kelurahan'] ?>
+                </option>
+                    <?php endforeach; ?>
+            </select>
         </div>
 
         <div class="flex justify-between">

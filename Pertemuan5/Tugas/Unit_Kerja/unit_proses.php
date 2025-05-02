@@ -2,31 +2,33 @@
 // Koneksi Database
 require_once '../dbkoneksi.php';
 
-if (isset($_POST['proses'])) {
-    $data = [
-        $_POST['kode_unit'],
-        $_POST['nama_unit'],
-        $_POST['keterangan']
-    ];
+// Query Tangkap data
+$kode = $_POST['kode_unit'] ?? '';
+$nama = $_POST['nama_unit'] ?? '';
+$status = $_POST['keterangan'] ?? '';
+$_proses = $_POST['proses'] ?? '';
 
-    if ($_POST['id_edit']) {
-        // Update
-        $data[] = $_POST['id_edit'];
-        $sql = "UPDATE unit_kerja SET kode_unit=?, nama_unit=?, keterangan=? WHERE id=?";
-    } else {
-        // Insert
-        $sql = "INSERT INTO unit_kerja (kode_unit, nama_unit, keterangan) VALUES (?, ?, ?)";
-    }
-
+if ($_proses == "Simpan") {
+    $sql = "INSERT INTO unit_kerja (kode_unit, nama_unit, keterangan) VALUES (?, ?, ?)";
+    $ar_data = [$kode, $nama, $status];
+} elseif ($_proses == "Update") {
+    $id_edit = $_POST['id_edit'] ?? NULL;
+    $sql = "UPDATE unit_kerja SET kode_unit=?, nama_unit=?, keterangan=? WHERE id=?";
+    $ar_data = [$kode, $nama, $status];
+} elseif (isset($_GET['hapus']) && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sql = "DELETE FROM unit_kerja WHERE id = ?";
     $stmt = $dbh->prepare($sql);
-    $stmt->execute($data);
+    $stmt->execute([$id]);
     header("Location: index.php");
     exit;
+} else {
+    die("Proses tidak diketahui");
 }
 
-if (isset($_GET['hapus']) && isset($_GET['id'])) {
-    $stmt = $dbh->prepare("DELETE FROM unit_kerja WHERE id = ?");
-    $stmt->execute([$_GET['id']]);
-    header("Location: index.php");
-    exit;
-}
+// Jalankan query
+$stmt = $dbh->prepare($sql);
+$stmt->execute($ar_data);
+
+// Redirect ke index
+header("Location: index.php");
