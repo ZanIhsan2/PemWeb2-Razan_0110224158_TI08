@@ -1,6 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="#" class="brand-link">
-        <span class="brand-text font-weight-light">Admin Puskes Mas</span>
+        <i class="fas fa-user ml-2 mr-2"></i>
+        <span class="brand-text font-weight-light">Razan Muhammad</span>
     </a>
     <div class="sidebar">
         <nav class="mt-2">
